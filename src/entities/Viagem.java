@@ -19,6 +19,9 @@ public class Viagem {
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 
 	// Contrustores
+	public Viagem() {
+	}
+	
 	public Viagem(int quantidadeDeLugares, Local pontoDePartida, Local destino, String data, Motorista motorista, double precoPorKm) {
 	    this.quantidadeDeLugares = quantidadeDeLugares;
 	    this.pontoDePartida = pontoDePartida;
@@ -27,17 +30,7 @@ public class Viagem {
 	    this.preco = calcularPreco(pontoDePartida, destino);
 	    this.data = data;
 	    this.motorista = motorista;
-	    this.passageiros = new ArrayList<>();
-	    this.avaliacoes = new ArrayList<>();
 	    this.progresso = false;
-	}
-
-	public Viagem(Integer quantidadeDeLugares, Local pontoDePartida, Local destino, Motorista motorista) {
-		this.quantidadeDeLugares = quantidadeDeLugares;
-		this.pontoDePartida = pontoDePartida;
-		this.destino = destino;
-		this.motorista = motorista;
-		motorista.addViagem(this);
 	}
 
 	// Getters e Setters
