@@ -64,8 +64,10 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 
 		// Simulação de base de dados existente
-		// Passageiro p1 = new Passageiro("Robirso", "Endereco1", "robriso@gmail.com", "1234567890", "123456");
-		// Motorista m1 = new Motorista("Jão", "Endereco2", "jao@gmail.com", "0987654321", "654321");
+		// Passageiro p1 = new Passageiro("Robirso", "Endereco1", "robriso@gmail.com",
+		// "1234567890", "123456");
+		// Motorista m1 = new Motorista("Jão", "Endereco2", "jao@gmail.com",
+		// "0987654321", "654321");
 
 		// Local l1 = new Local("São Paulo", 0.0, 290.0);
 		// Local l2 = new Local("São José do Rio Pardo", 0.0, 0.0);
@@ -173,7 +175,8 @@ public class Program {
 											double longitudePartida = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudePartida = sc.nextDouble();
-											Local partida = new Local(descricaoPartida, longitudePartida, latitudePartida);
+											Local partida = new Local(descricaoPartida, longitudePartida,
+													latitudePartida);
 
 											// Local: Destino
 											System.out.println("\nDESTINO");
@@ -183,16 +186,20 @@ public class Program {
 											double longitudeDestino = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudeDestino = sc.nextDouble();
-											Local destino = new Local(descricaoDestino, longitudeDestino, latitudeDestino);
+											Local destino = new Local(descricaoDestino, longitudeDestino,
+													latitudeDestino);
 
-											Viagem viagemEncontrada = passageiro.buscarCarona(motorista.getViagens(), partida, destino);
+											Viagem viagemEncontrada = passageiro.buscarCarona(motorista.getViagens(),
+													partida, destino);
 
 											if (viagemEncontrada != null) {
-												System.out.println("Carona encontrada. Deseja solicitar carona ao motorista? (S/N)");
+												System.out.println(
+														"Carona encontrada. Deseja solicitar carona ao motorista? (S/N)");
 												char resposta = sc.next().charAt(0);
 
 												if (resposta == 'S' || resposta == 's') {
-													boolean aceito = motorista.aceitarPassageiro(passageiro, viagemEncontrada);
+													boolean aceito = motorista.aceitarPassageiro(passageiro,
+															viagemEncontrada);
 													if (aceito) {
 														System.out.println("Você foi aceito pelo motorista!");
 													} else {
@@ -210,12 +217,14 @@ public class Program {
 											System.out.println("\nAVALIAR VIAGEM");
 
 											if (passageiro.getViagens().isEmpty()) {
-												System.out.println("Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
+												System.out.println(
+														"Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
 											} else {
 												System.out.println("\nVIAGENS CONCLUIDAS");
 												for (Viagem viagem : passageiro.getViagens()) {
 													if (viagem.getProgresso()) {
-														System.out.println("[" + contador + "] " + viagem.resumoViagem());
+														System.out
+																.println("[" + contador + "] " + viagem.resumoViagem());
 													}
 													contador++;
 												}
@@ -223,7 +232,8 @@ public class Program {
 												System.out.print("\nEntre com o índice da viagem a avaliar: ");
 												int indiceViagem = sc.nextInt();
 												System.out.println();
-												System.out.println(passageiro.getViagens().get(indiceViagem).resumoViagem());
+												System.out.println(
+														passageiro.getViagens().get(indiceViagem).resumoViagem());
 												System.out.print("Nota [0 - 5]: ");
 												int nota = sc.nextInt();
 												System.out.print("Comentário: ");
@@ -256,7 +266,8 @@ public class Program {
 													sc.nextLine();
 													qtdValida = true;
 												} catch (InputMismatchException err) {
-													System.out.println("Por favor, insira um número inteiro válido para a quantidade de lugares.");
+													System.out.println(
+															"Por favor, insira um número inteiro válido para a quantidade de lugares.");
 													sc.nextLine();
 												}
 											}
@@ -288,7 +299,8 @@ public class Program {
 											System.out.print("Preço por quilômetro: ");
 											double precoPorKm = sc.nextDouble();
 
-											Viagem viagem = new Viagem(qtdLugares, partida, destino, data, motorista, precoPorKm);
+											Viagem viagem = new Viagem(qtdLugares, partida, destino, data, motorista,
+													precoPorKm);
 
 											// Adicionar parada no trajeto
 											char addParada;
@@ -325,21 +337,19 @@ public class Program {
 
 										} else if (opcaoMotorista == 3) {
 											System.out.println("\nVerificar avaliações");
-											int contador = 0;
-											for (Viagem viagem : motorista.getViagens()) {
-												for (Avaliacao avaliacao : viagem.getAvaliacoes()) {
-													System.out.println("[" + contador + "] " + avaliacao.getComentario());
-													System.out.println("Nota: " + avaliacao.getNota());
-													contador++;
-												}
-											}
-
+											motorista.exibirComentarios();
+											System.out.println("Nota geral: " + motorista.getMediaDeAvaliacoes());
 										} else if (opcaoMotorista == 4) {
 											System.out.println("\nSessão motorista encerrada.\n");
 											break;
 										}
 									}
 								}
+							}
+							System.out.println("Sair da conta (y)?");
+							char sair = sc.next().toLowerCase().charAt(0);
+							if (sair == 'y') {
+								break;
 							}
 						}
 
