@@ -1,8 +1,6 @@
 package application;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import entities.Avaliacao;
 import entities.Local;
@@ -36,26 +34,6 @@ public class Program {
 		System.out.println("3) Sair");
 		System.out.print("Selecione uma opção: ");
 	}
-	
-	public static boolean validarNome(String nome) {
-		return nome != null && nome.trim().length() > 0 && nome.matches("[a-zA-Z\\s]+");
-    }
-
-    public static boolean validarEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        
-        return matcher.matches();
-    }
-
-    public static boolean validarTelefone(String telefone) {
-        return telefone.matches("\\d+");
-    }
-
-    public static boolean validarSenha(String senha) {
-        return senha.length() >= 6;
-    }
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -77,64 +55,28 @@ public class Program {
 		Local l4 = new Local("Mogi Mirim", 0.0, 100.0);
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
-		
 		// Programa principal
 		Usuario usuario = null;
 		Passageiro passageiro = null;
 		Motorista motorista = null;
-		
 		while (true) {
 			mostrarMenuInicial();
 			int opcao = sc.nextInt();
-			
 			// Realizar o cadastro
 			if (opcao == 1) {
 				if (!cadastroRealizado) {
 					sc.nextLine();
 					System.out.println("\nCADASTRO");
-					
-					String nome;
-                    do {
-                        System.out.print("Nome: ");
-                        nome = sc.nextLine();
-                        
-                        if (!validarNome(nome)) {
-                            System.out.println("Nome inválido! Tente novamente.");
-                        }
-                    } while (!validarNome(nome));
-
-                    System.out.print("Endereço: ");
-                    String endereco = sc.nextLine();
-
-                    String email;
-                    do {
-                        System.out.print("E-mail: ");
-                        email = sc.nextLine();
-                        
-                        if (!validarEmail(email)) {
-                            System.out.println("E-mail inválido! Tente novamente.");
-                        }
-                    } while (!validarEmail(email));
-
-                    String telefone;
-                    do {
-                        System.out.print("Telefone: ");
-                        telefone = sc.nextLine();
-                        
-                        if (!validarTelefone(telefone)) {
-                            System.out.println("Telefone inválido! Digite apenas números.");
-                        }
-                    } while (!validarTelefone(telefone));
-
-                    String senha;
-                    do {
-                        System.out.print("Senha: ");
-                        senha = sc.nextLine();
-                        if (!validarSenha(senha)) {
-                            System.out.println("Senha inválida. A senha deve ter pelo menos 6 caracteres.");
-                        }
-                    } while (!validarSenha(senha));
-                    
+					System.out.print("Nome: ");
+					String nome = sc.nextLine();
+					System.out.print("Endereço: ");
+					String endereco = sc.nextLine();
+					System.out.print("E-mail: ");
+					String email = sc.nextLine();
+					System.out.print("Telefone: ");
+					String telefone = sc.nextLine();
+					System.out.print("Senha: ");
+					String senha = sc.nextLine();
 					usuario = new Usuario(nome, endereco, email, telefone, senha);
 					passageiro = new Passageiro(nome, endereco, email, telefone, senha);
 					motorista = new Motorista(nome, endereco, email, telefone, senha);
@@ -166,18 +108,15 @@ public class Program {
 					System.out.print("Senha: ");
 					String senhaLogin = sc.nextLine();
 					System.out.println();
-					
 					if (usuario.getEmail().equals(emailLogin) && usuario.getSenha().equals(senhaLogin)) {
 						while (true) {
 							System.out.print("Passageiro(p) ou Motorista(m): ");
 							char tipoConta = sc.next().toLowerCase().charAt(0);
-							
 							while (tipoConta != 'p' && tipoConta != 'm') {
 								System.out.println("Tipo inválido. Tente novamente.");
 								System.out.println("Passageiro(p) ou Motorista(m): ");
 								tipoConta = sc.next().toLowerCase().charAt(0);
 							}
-							
 							// Menu para o usuário Passageiro
 							if (tipoConta == 'p') {
 								if (passageiro instanceof Passageiro) {
@@ -185,7 +124,6 @@ public class Program {
 										System.out.println();
 										mostrarMenuPassageiro();
 										int opcaoPassageiro = sc.nextInt();
-										
 										if (opcaoPassageiro == 1) {
 											System.out.println("\nBuscar carona");
 										} else if (opcaoPassageiro == 2) {
@@ -193,18 +131,17 @@ public class Program {
 
 											System.out.println("\nAVALIAR VIAGEM");
 											System.out.println("\nVIAGENS CONCLUIDAS");
-											
 											for (Viagem viagem : passageiro.getViagens()) {
 												if (viagem.getProgresso()) {
 													System.out.println("[" + contador + "]" + viagem.resumoViagem());
 												}
 												contador++;
 											}
-											
 											System.out.print("\nEntre com o índice da viagem a avaliar: ");
 											int indiceViagem = sc.nextInt();
 											System.out.println();
-											System.out.println(passageiro.getViagens().get(indiceViagem).resumoViagem());
+											System.out
+													.println(passageiro.getViagens().get(indiceViagem).resumoViagem());
 											System.out.print("Nota [0 - 5]: ");
 											int nota = sc.nextInt();
 											System.out.print("Comentario: ");
@@ -256,13 +193,11 @@ public class Program {
 											double yDestino = sc.nextDouble();
 											Local destino = new Local(descricaoPartida, xDestino, yDestino);
 											Viagem viagem = new Viagem(qtdLugares, partida, destino, motorista);
-											
 											// Adicionar parada no trajeto
 											char addParada;
 											do {
 												System.out.print("Adicionar parada (s/n): ");
 												addParada = sc.next().toLowerCase().charAt(0);
-												
 												if (addParada == 's') {
 													sc.nextLine();
 													System.out.println("PARADA ");
@@ -305,7 +240,6 @@ public class Program {
 									}
 								}
 							}
-							
 							System.out.println("Sair da conta (y)?");
 							char sair = sc.next().toLowerCase().charAt(0);
 							if (sair == 'y') {
@@ -320,7 +254,6 @@ public class Program {
 					System.out.println("\nRealize o cadastro primeiro.\n");
 				}
 			}
-			
 			// Sair do sistema
 			else if (opcao == 3) {
 				System.out.println("Programa finalizado.");
@@ -331,7 +264,6 @@ public class Program {
 				System.out.println("\nOpção inválida. Tente novamente.\n");
 			}
 		}
-		
 		sc.close();
 	}
 }
