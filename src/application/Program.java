@@ -3,6 +3,8 @@ package application;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.InputMismatchException;
+import java.util.Locale;
 
 import entities.Avaliacao;
 import entities.Local;
@@ -58,6 +60,7 @@ public class Program {
     }
 
     public static void main(String[] args) {
+    	Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
         // Simulação de base de dados existente
@@ -244,9 +247,19 @@ public class Program {
 
                                         if (opcaoMotorista == 1) {
                                         	System.out.println("\nCADASTRAR NOVA VIAGEM");
-                                            System.out.print("Quantidade de lugares: ");
-                                            int qtdLugares = sc.nextInt();
-                                            sc.nextLine();
+                                        	int qtdLugares = 0;
+                                            boolean qtdValida = false;
+                                            while (!qtdValida) {
+                                                try {
+                                                    System.out.print("Quantidade de lugares: ");
+                                                    qtdLugares = sc.nextInt();
+                                                    sc.nextLine();
+                                                    qtdValida = true;
+                                                } catch (InputMismatchException err) {
+                                                    System.out.println("Por favor, insira um número inteiro válido para a quantidade de lugares.");
+                                                    sc.nextLine(); // Limpar o buffer do scanner
+                                                }
+                                            };
 
 											// Local: Ponto de partida
                                             System.out.println("\nPONTO DE PARTIDA");
@@ -278,7 +291,7 @@ public class Program {
                                             Viagem viagem = new Viagem(qtdLugares, partida, destino, data, motorista, precoPorKm);
                                             
                                             // Adicionar parada no trajeto
-											char addParada;
+                                            char addParada;
 											do {
 												System.out.print("Adicionar parada (s/n): ");
 												addParada = sc.next().toLowerCase().charAt(0);
@@ -305,7 +318,7 @@ public class Program {
                                             System.out.println("\nConsultar passageiros");
                                             
                                             for (Viagem viagem : motorista.getViagens()) {
-												System.out.print(viagem.resumoViagem());
+                                            	System.out.print(viagem.resumoViagem());
 												viagem.exibirProgresso();
 												viagem.exibirPassageiros();
 											}
