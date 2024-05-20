@@ -2,20 +2,34 @@ package entities;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 public class Viagem {
-	private Integer quantidadeDeLugares;
+	private int quantidadeDeLugares;
 	private Local pontoDePartida;
 	private Local destino;
+	private double preco;
+    private String data;
+	private Boolean progresso;
 	private Motorista motorista;
-	private Boolean progresso = false;
+	private double precoPorKm;
 	private List<Local> trajeto = new ArrayList<Local>();
 	private List<Passageiro> passageiros = new ArrayList<Passageiro>();
 	private List<Passageiro> espera = new ArrayList<Passageiro>();
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 
 	// Contrustores
-	public Viagem() {
+	public Viagem(int quantidadeDeLugares, Local pontoDePartida, Local destino, String data, Motorista motorista, double precoPorKm) {
+	    this.quantidadeDeLugares = quantidadeDeLugares;
+	    this.pontoDePartida = pontoDePartida;
+	    this.destino = destino;
+	    this.precoPorKm = precoPorKm;
+	    this.preco = calcularPreco(pontoDePartida, destino);
+	    this.data = data;
+	    this.motorista = motorista;
+	    this.passageiros = new ArrayList<>();
+	    this.avaliacoes = new ArrayList<>();
+	    this.progresso = false;
 	}
 
 	public Viagem(Integer quantidadeDeLugares, Local pontoDePartida, Local destino, Motorista motorista) {
@@ -49,6 +63,23 @@ public class Viagem {
 
 	public void setDestino(Local destino) {
 		this.destino = destino;
+	}
+
+	
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	public Motorista getMotorista() {
@@ -129,7 +160,26 @@ public class Viagem {
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-		return pontoDePartida.getDescricao() + " --> " + destino.getDescricao();
-	}
+        return "Viagem de " + pontoDePartida.getDescricao() + " para " + destino.getDescricao() + " em " + data;
+    }
+	
+	public double calcularDistancia(Local partida, Local destino) {
+        double x1 = partida.getX();
+        double y1 = partida.getY();
+        double x2 = destino.getX();
+        double y2 = destino.getY();
+
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
+
+	public double calcularPreco(Local partida, Local destino) {
+        double distancia = calcularDistancia(partida, destino);
+        double preco =  distancia * precoPorKm;
+        
+        DecimalFormat df = new DecimalFormat("#.##");
+        preco = Double.valueOf(df.format(preco));
+
+        return preco;
+    }
 
 }
