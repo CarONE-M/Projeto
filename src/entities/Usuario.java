@@ -73,8 +73,8 @@ public class Usuario {
 	public void addViagem(Viagem viagem) {
 		viagens.add(viagem);
 	}
-	
+
 	public boolean temViagem() {
-	    return !this.viagens.isEmpty();
+		return !this.viagens.isEmpty();
 	}
 }

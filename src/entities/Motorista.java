@@ -5,25 +5,25 @@ import java.util.ArrayList;
 
 public class Motorista extends Usuario {
 	private List<Viagem> viagens;
-	
+
 	// Construtores
 	public Motorista() {
 		super();
-        this.viagens = new ArrayList<>();
+		this.viagens = new ArrayList<>();
 	}
 
 	public Motorista(String nome, String endereco, String email, String telefone, String senha) {
 		super(nome, endereco, email, telefone, senha);
-        this.viagens = new ArrayList<>();
+		this.viagens = new ArrayList<>();
 	}
-	
-    public List<Viagem> getViagens() {
-        return viagens;
-    }
 
-    public void setViagens(Viagem viagem) {
-        this.viagens.add(viagem);
-    }
+	public List<Viagem> getViagens() {
+		return viagens;
+	}
+
+	public void setViagens(Viagem viagem) {
+		this.viagens.add(viagem);
+	}
 
 	// Consular passageiro de uma viagem específica
 	public List<Passageiro> consultarPassageiros(Viagem viagem) {
@@ -68,13 +68,13 @@ public class Motorista extends Usuario {
 				System.out.println("sem comentários ainda...");
 		}
 	}
-	
+
 	public boolean aceitarPassageiro(Passageiro passageiro, Viagem viagem) {
-	    if (viagem.getQuantidadeDeLugares() > 0) {
-	        viagem.addPassageiros(passageiro);
-	        return true;
-	    } else {
-	        return false;
-	    }
+		if (viagem.getQuantidadeDeLugares() > 0) {
+			viagem.addPassageiros(passageiro);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

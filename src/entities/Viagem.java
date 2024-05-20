@@ -9,7 +9,7 @@ public class Viagem {
 	private Local pontoDePartida;
 	private Local destino;
 	private double preco;
-    private String data;
+	private String data;
 	private Boolean progresso;
 	private Motorista motorista;
 	private double precoPorKm;
@@ -21,16 +21,16 @@ public class Viagem {
 	// Contrustores
 	public Viagem() {
 	}
-	
+
 	public Viagem(int quantidadeDeLugares, Local pontoDePartida, Local destino, String data, Motorista motorista, double precoPorKm) {
-	    this.quantidadeDeLugares = quantidadeDeLugares;
-	    this.pontoDePartida = pontoDePartida;
-	    this.destino = destino;
-	    this.precoPorKm = precoPorKm;
-	    this.preco = calcularPreco(pontoDePartida, destino);
-	    this.data = data;
-	    this.motorista = motorista;
-	    this.progresso = false;
+		this.quantidadeDeLugares = quantidadeDeLugares;
+		this.pontoDePartida = pontoDePartida;
+		this.destino = destino;
+		this.precoPorKm = precoPorKm;
+		this.preco = calcularPreco(pontoDePartida, destino);
+		this.data = data;
+		this.motorista = motorista;
+		this.progresso = false;
 	}
 
 	// Getters e Setters
@@ -58,7 +58,6 @@ public class Viagem {
 		this.destino = destino;
 	}
 
-	
 	public double getPreco() {
 		return preco;
 	}
@@ -110,7 +109,7 @@ public class Viagem {
 	}
 
 	public void addPassageiros(Passageiro passageiro) {
-		if (quantidadeDeLugares > 0){
+		if (quantidadeDeLugares > 0) {
 			passageiros.add(passageiro);
 			quantidadeDeLugares--;
 		} else {
@@ -153,26 +152,26 @@ public class Viagem {
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-        return "Viagem de " + pontoDePartida.getDescricao() + " para " + destino.getDescricao() + " em " + data;
-    }
-	
-	public double calcularDistancia(Local partida, Local destino) {
-        double x1 = partida.getX();
-        double y1 = partida.getY();
-        double x2 = destino.getX();
-        double y2 = destino.getY();
+		return "Viagem de " + pontoDePartida.getDescricao() + " para " + destino.getDescricao() + " em " + data;
+	}
 
-        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-    }
+	public double calcularDistancia(Local partida, Local destino) {
+		double x1 = partida.getX();
+		double y1 = partida.getY();
+		double x2 = destino.getX();
+		double y2 = destino.getY();
+
+		return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+	}
 
 	public double calcularPreco(Local partida, Local destino) {
-        double distancia = calcularDistancia(partida, destino);
-        double preco =  distancia * precoPorKm;
-        
-        DecimalFormat df = new DecimalFormat("#.##");
-        preco = Double.valueOf(df.format(preco));
+		double distancia = calcularDistancia(partida, destino);
+		double preco = distancia * precoPorKm;
 
-        return preco;
-    }
+		DecimalFormat df = new DecimalFormat("#.##");
+		preco = Double.valueOf(df.format(preco));
+
+		return preco;
+	}
 
 }
