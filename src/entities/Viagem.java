@@ -164,7 +164,9 @@ public class Viagem {
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-		return "Viagem de " + pontoDePartida.getDescricao() + " para " + destino.getDescricao() + " em " + data;
+		String resumo = "Viagem: " + pontoDePartida + " --> " + destino + "\nTrajeto: " + trajeto;
+		
+		return resumo;
 	}
 
 	public double calcularDistancia(Local partida, Local destino) {
