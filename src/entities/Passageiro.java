@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Passageiro extends Usuario {
@@ -11,13 +12,31 @@ public class Passageiro extends Usuario {
 		super(nome, endereco, email, telefone, senha);
 	}
 
-	public Viagem buscarCarona(List<Viagem> viagensDisponiveis, Local partida, Local destino) {
-		for (Viagem viagem : viagensDisponiveis) {
-			if (viagem.getPontoDePartida().compararDistancia(partida) <= 2.0 && viagem.getDestino().compararDistancia(destino) <= 2.0) {
-				return viagem;
+	public List<Viagem> buscarCarona(List<Viagem> viagensCadastradas, Local partida, Local destino) {
+		List<Viagem> viagensDisponiveis = new ArrayList<>();
+
+		for (Viagem viagem : viagensCadastradas) {
+			boolean pontoPartidaEncontrado = false;
+			boolean pontoDestinoEncontrado = false;
+			if (viagem.getProgresso() == false && viagem.getQuantidadeDeLugares() > 0) {
+				for (Local local : viagem.getTrajeto()) {
+					if (local.compararDistancia(partida) <= 5.0 && pontoPartidaEncontrado == false) {
+						pontoPartidaEncontrado = true;
+					}
+					if (pontoPartidaEncontrado && local.compararDistancia(destino) <= 5.0) {
+						pontoDestinoEncontrado = true;
+					}
+					if (pontoPartidaEncontrado && pontoDestinoEncontrado) {
+						viagensDisponiveis.add(viagem);
+						break;
+					}
+				}
 			}
 		}
-		return null;
+		if (viagensDisponiveis.size() > 0)
+			return viagensDisponiveis;
+		else
+			return null;
 	}
 
 }
