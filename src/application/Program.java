@@ -206,7 +206,7 @@ public class Program {
 													System.out.println(index + ") " + viagem.resumoViagem() + "\n");
 													index++;
 												}
-												
+
 												System.out.print("\nInsira o id para solicitar carona: ");
 												int viagemSelecionada = sc.nextInt();
 												viagens.get(viagemSelecionada).addEspera(passageiro);
@@ -215,7 +215,7 @@ public class Program {
 											}
 										} else if (opcaoPassageiro == 2) {
 											int contador = 0;
-
+											int contaViagem = 0;
 											System.out.println("\nAVALIAR VIAGEM");
 
 											if (passageiro.getViagens().isEmpty()) {
@@ -225,26 +225,27 @@ public class Program {
 												System.out.println("\nVIAGENS CONCLUIDAS");
 												for (Viagem viagem : passageiro.getViagens()) {
 													if (viagem.getProgresso()) {
-														System.out
-																.println(contador + ") " + viagem.resumoViagem());
+														System.out.println(contador + ") " + viagem.resumoViagem());
+														contaViagem++;
 													}
 													contador++;
 												}
-
-												System.out.print("\nEntre com o índice da viagem a avaliar: ");
-												int indiceViagem = sc.nextInt();
-												System.out.println();
-												System.out.println(
-														passageiro.getViagens().get(indiceViagem).resumoViagem());
-												System.out.print("Nota [0 - 5]: ");
-												int nota = sc.nextInt();
-												System.out.print("Comentário: ");
-												sc.nextLine();
-												String comentario = sc.nextLine();
-												Avaliacao avaliacao = new Avaliacao(nota, comentario);
-												passageiro.getViagens().get(indiceViagem).addAvaliacao(avaliacao);
+												if (contaViagem > 0) {
+													System.out.print("\nEntre com o ID da viagem a avaliar: ");
+													int indiceViagem = sc.nextInt();
+													System.out.println();
+													System.out.println(passageiro.getViagens().get(indiceViagem).resumoViagem());
+													System.out.print("Nota [0 - 5]: ");
+													int nota = sc.nextInt();
+													System.out.print("Comentário: ");
+													sc.nextLine();
+													String comentario = sc.nextLine();
+													Avaliacao avaliacao = new Avaliacao(nota, comentario);
+													passageiro.getViagens().get(indiceViagem).addAvaliacao(avaliacao);
+												} else {
+													System.out.println("Você não possúi nenhuma viagem completa para avaliar ainda.");
+												}
 											}
-
 										} else if (opcaoPassageiro == 3) {
 											System.out.println("\nSessão passageiro encerrada.\n");
 											break;
@@ -347,8 +348,8 @@ public class Program {
 														char resposta = sc.next().toLowerCase().charAt(0);
 														if (resposta == 's') {
 															motorista.aceitarPassageiro(solicitante, viagem);
+															solicitante.addViagem(viagem);
 															iterator.remove();
-															viagem.concluirViagem();
 														} else if (resposta == 'n') {
 															iterator.remove();
 														}
