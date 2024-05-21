@@ -2,6 +2,7 @@ package application;
 
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -66,19 +67,17 @@ public class Program {
 
 		// Simulação de base de dados existente
 
-				// passageiros
- 
-				// motoristas
-				
-				// locais
+		// passageiros
+
+		// motoristas
+
+		// locais
 //				Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
 //				Local l2 = new Local("São Paulo", 290.0, 0.0);
 //				Local l3 = new Local("Campinas", 180.0, 0.0);
 //				Local l4 = new Local("Mogi Mirim", 100.0, 0.0);
 //				Local l5 = new Local("Jundiaí", 230.0, 0.0);
 //				Local l6 = new Local("Casa Branca", 30.0, 0.0);
-		
-		
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
@@ -197,20 +196,17 @@ public class Program {
 											Local destino = new Local(descricaoDestino, longitudeDestino,
 													latitudeDestino);
 
-											Viagem viagemEncontrada = passageiro.buscarCarona(motorista.getViagens(),
+											List<Viagem> viagens = passageiro.buscarCarona(motorista.getViagens(),
 													partida, destino);
-
-											if (viagemEncontrada != null) {
-												System.out.println(viagemEncontrada.resumoViagem() +
-														"\nCarona encontrada. Deseja solicitar carona ao motorista? (S/N)");
-												char resposta = sc.next().toLowerCase().charAt(0);
-
-												if (resposta == 's') {
-													viagemEncontrada.addEspera(passageiro);
-													System.out.println("Carona solicitada.");
-												} else {
-													System.out.println("Carona não solicitada.");
+											int index = 0;
+											if (viagens.size() > 0) {
+												for (Viagem viagem : viagens) {
+													System.out.println("[" + index + "] " + viagem.resumoViagem());
+													index++;
 												}
+												System.out.print("Insira o id para solicitar carona: ");
+												int viagemSelecionada = sc.nextInt();
+												viagens.get(viagemSelecionada).addEspera(passageiro);
 											} else {
 												System.out.println("Nenhuma carona encontrada.");
 											}
@@ -333,33 +329,29 @@ public class Program {
 										} else if (opcaoMotorista == 2) {
 											System.out.println("\nConsultar passageiros");
 
+											for (Viagem viagem : motorista.getViagens()) {
+												System.out.print(viagem.resumoViagem());
+												viagem.exibirProgresso();
+												viagem.exibirPassageiros();
 
-										    for (Viagem viagem : motorista.getViagens()) {
-										        System.out.print(viagem.resumoViagem());
-										        viagem.exibirProgresso();
-										        viagem.exibirPassageiros();
-										        
-										        if (viagem.getEspera().size() > 0) {
-										            Iterator<Passageiro> iterator = viagem.getEspera().iterator();
-										            while (iterator.hasNext()) {
-										                Passageiro solicitante = iterator.next();
-										                System.out.printf("%s está solicitando carona.", solicitante.getNome());
-										                System.out.println("\nAceitar[s/n]: ");
-										                char resposta = sc.next().toLowerCase().charAt(0);
-										                if (resposta == 's') {
-										                    if (motorista.aceitarPassageiro(solicitante, viagem)) {
-										                        iterator.remove();  // Remove da lista de espera após aceitar
-										                    } else {
-										                        System.out.println("Não há lugares disponíveis.");
-										                    }
-										                } else if (resposta == 'n') {
-										                    iterator.remove(); 
-										                }
-										            }
-										        }
-										    }
-										}
-										else if (opcaoMotorista == 3) {
+												if (viagem.getEspera().size() > 0) {
+													Iterator<Passageiro> iterator = viagem.getEspera().iterator();
+													while (iterator.hasNext()) {
+														Passageiro solicitante = iterator.next();
+														System.out.printf("%s está solicitando carona.",
+																solicitante.getNome());
+														System.out.println("\nAceitar[s/n]: ");
+														char resposta = sc.next().toLowerCase().charAt(0);
+														if (resposta == 's') {
+															motorista.aceitarPassageiro(solicitante, viagem);
+															iterator.remove();
+														} else if (resposta == 'n') {
+															iterator.remove();
+														}
+													}
+												}
+											}
+										} else if (opcaoMotorista == 3) {
 											System.out.println("\nVerificar avaliações");
 											motorista.exibirComentarios();
 											System.out.println("Nota geral: " + motorista.getMediaDeAvaliacoes());
