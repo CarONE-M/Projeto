@@ -1,10 +1,11 @@
 package application;
 
+import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.InputMismatchException;
-import java.util.Locale;
 
 import entities.Avaliacao;
 import entities.Local;
@@ -64,15 +65,20 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 
 		// Simulação de base de dados existente
-		// Passageiro p1 = new Passageiro("Robirso", "Endereco1", "robriso@gmail.com",
-		// "1234567890", "123456");
-		// Motorista m1 = new Motorista("Jão", "Endereco2", "jao@gmail.com",
-		// "0987654321", "654321");
 
-		// Local l1 = new Local("São Paulo", 0.0, 290.0);
-		// Local l2 = new Local("São José do Rio Pardo", 0.0, 0.0);
-		// Local l3 = new Local("Campinas", 0.0, 180.0);
-		// Local l4 = new Local("Mogi Mirim", 0.0, 100.0);
+				// passageiros
+ 
+				// motoristas
+				
+				// locais
+//				Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
+//				Local l2 = new Local("São Paulo", 290.0, 0.0);
+//				Local l3 = new Local("Campinas", 180.0, 0.0);
+//				Local l4 = new Local("Mogi Mirim", 100.0, 0.0);
+//				Local l5 = new Local("Jundiaí", 230.0, 0.0);
+//				Local l6 = new Local("Casa Branca", 30.0, 0.0);
+		
+		
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
@@ -169,6 +175,7 @@ public class Program {
 
 											// Local: Ponto de partida
 											System.out.println("\nPONTO DE PARTIDA");
+											sc.nextLine();
 											System.out.print("Descrição: ");
 											String descricaoPartida = sc.nextLine();
 											System.out.print("Digite a longitude: ");
@@ -180,6 +187,7 @@ public class Program {
 
 											// Local: Destino
 											System.out.println("\nDESTINO");
+											sc.nextLine();
 											System.out.print("Descrição: ");
 											String descricaoDestino = sc.nextLine();
 											System.out.print("Digite a longitude: ");
@@ -193,18 +201,13 @@ public class Program {
 													partida, destino);
 
 											if (viagemEncontrada != null) {
-												System.out.println(
-														"Carona encontrada. Deseja solicitar carona ao motorista? (S/N)");
-												char resposta = sc.next().charAt(0);
+												System.out.println(viagemEncontrada.resumoViagem() +
+														"\nCarona encontrada. Deseja solicitar carona ao motorista? (S/N)");
+												char resposta = sc.next().toLowerCase().charAt(0);
 
-												if (resposta == 'S' || resposta == 's') {
-													boolean aceito = motorista.aceitarPassageiro(passageiro,
-															viagemEncontrada);
-													if (aceito) {
-														System.out.println("Você foi aceito pelo motorista!");
-													} else {
-														System.out.println("O carro está cheio.");
-													}
+												if (resposta == 's') {
+													viagemEncontrada.addEspera(passageiro);
+													System.out.println("Carona solicitada.");
 												} else {
 													System.out.println("Carona não solicitada.");
 												}
@@ -321,7 +324,8 @@ public class Program {
 													viagem.addLocal(parada);
 												}
 											} while (addParada != 'n');
-
+											viagem.addLocal(0, partida);
+											viagem.addLocal(destino);
 											System.out.println("\nViagem cadastrada com sucesso!");
 											System.out.println("Resumo: " + viagem.resumoViagem());
 											System.out.println("Preço calculado: R$" + viagem.getPreco());
@@ -329,13 +333,33 @@ public class Program {
 										} else if (opcaoMotorista == 2) {
 											System.out.println("\nConsultar passageiros");
 
-											for (Viagem viagem : motorista.getViagens()) {
-												System.out.print(viagem.resumoViagem());
-												viagem.exibirProgresso();
-												viagem.exibirPassageiros();
-											}
 
-										} else if (opcaoMotorista == 3) {
+										    for (Viagem viagem : motorista.getViagens()) {
+										        System.out.print(viagem.resumoViagem());
+										        viagem.exibirProgresso();
+										        viagem.exibirPassageiros();
+										        
+										        if (viagem.getEspera().size() > 0) {
+										            Iterator<Passageiro> iterator = viagem.getEspera().iterator();
+										            while (iterator.hasNext()) {
+										                Passageiro solicitante = iterator.next();
+										                System.out.printf("%s está solicitando carona.", solicitante.getNome());
+										                System.out.println("\nAceitar[s/n]: ");
+										                char resposta = sc.next().toLowerCase().charAt(0);
+										                if (resposta == 's') {
+										                    if (motorista.aceitarPassageiro(solicitante, viagem)) {
+										                        iterator.remove();  // Remove da lista de espera após aceitar
+										                    } else {
+										                        System.out.println("Não há lugares disponíveis.");
+										                    }
+										                } else if (resposta == 'n') {
+										                    iterator.remove(); 
+										                }
+										            }
+										        }
+										    }
+										}
+										else if (opcaoMotorista == 3) {
 											System.out.println("\nVerificar avaliações");
 											motorista.exibirComentarios();
 											System.out.println("Nota geral: " + motorista.getMediaDeAvaliacoes());
