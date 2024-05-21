@@ -33,10 +33,7 @@ public class Passageiro extends Usuario {
 				}
 			}
 		}
-		if (viagensDisponiveis.size() > 0)
-			return viagensDisponiveis;
-		else
-			return null;
+		return viagensDisponiveis;
 	}
 
 }
