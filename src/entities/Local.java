@@ -44,5 +44,10 @@ public class Local {
 	public double compararDistancia(Local local) {
 		return Math.sqrt(Math.pow(x - local.getX(), 2) + Math.pow(y - local.getY(), 2));
 	}
+	
+	@Override
+	public String toString() {
+		return "[" + descricao + "x: " + x + " y: " + y + "]";
+	}
 
 }
