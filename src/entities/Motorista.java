@@ -56,12 +56,12 @@ public class Motorista extends Usuario {
 		}
 	}
 
-	public boolean aceitarPassageiro(Passageiro passageiro, Viagem viagem) {
+	public void aceitarPassageiro(Passageiro passageiro, Viagem viagem) {
 		if (viagem.getQuantidadeDeLugares() > 0) {
 			viagem.addPassageiros(passageiro);
-			return true;
-		} else {
-			return false;
+		}else {
+			System.out.println("Desculpe. Limite de passageiros atingido.");
+			viagem.removeEspera(passageiro);
 		}
 	}
 }
