@@ -47,7 +47,7 @@ public class Local {
 	
 	@Override
 	public String toString() {
-		return "[" + descricao + "x: " + x + " y: " + y + "]";
+		return descricao + ": " + x + ", " + y;
 	}
 
 }

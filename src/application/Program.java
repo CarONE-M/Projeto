@@ -200,11 +200,14 @@ public class Program {
 													partida, destino);
 											int index = 0;
 											if (viagens.size() > 0) {
+												System.out.println("\nVIAGENS DISPONÍVEIS");
+
 												for (Viagem viagem : viagens) {
-													System.out.println("[" + index + "] " + viagem.resumoViagem());
+													System.out.println(index + ") " + viagem.resumoViagem() + "\n");
 													index++;
 												}
-												System.out.print("Insira o id para solicitar carona: ");
+												
+												System.out.print("\nInsira o id para solicitar carona: ");
 												int viagemSelecionada = sc.nextInt();
 												viagens.get(viagemSelecionada).addEspera(passageiro);
 											} else {
@@ -223,7 +226,7 @@ public class Program {
 												for (Viagem viagem : passageiro.getViagens()) {
 													if (viagem.getProgresso()) {
 														System.out
-																.println("[" + contador + "] " + viagem.resumoViagem());
+																.println(contador + ") " + viagem.resumoViagem());
 													}
 													contador++;
 												}
@@ -323,8 +326,8 @@ public class Program {
 											viagem.addLocal(0, partida);
 											viagem.addLocal(destino);
 											System.out.println("\nViagem cadastrada com sucesso!");
-											System.out.println("Resumo: " + viagem.resumoViagem());
-											System.out.println("Preço calculado: R$" + viagem.getPreco());
+											System.out.println("RESUMO: " + viagem.resumoViagem());
+											System.out.println(" - Preço calculado: R$" + viagem.getPreco());
 
 										} else if (opcaoMotorista == 2) {
 											System.out.println("\nConsultar passageiros");
@@ -345,6 +348,7 @@ public class Program {
 														if (resposta == 's') {
 															motorista.aceitarPassageiro(solicitante, viagem);
 															iterator.remove();
+															viagem.concluirViagem();
 														} else if (resposta == 'n') {
 															iterator.remove();
 														}
@@ -352,7 +356,7 @@ public class Program {
 												}
 											}
 										} else if (opcaoMotorista == 3) {
-											System.out.println("\nVerificar avaliações");
+											System.out.println("\nAVALIAÇÕES");
 											motorista.exibirComentarios();
 											System.out.println("Nota geral: " + motorista.getMediaDeAvaliacoes());
 										} else if (opcaoMotorista == 4) {
@@ -362,7 +366,7 @@ public class Program {
 									}
 								}
 							}
-							System.out.println("Sair da conta (y)?");
+							System.out.print("Sair da conta (y)? ");
 							char sair = sc.next().toLowerCase().charAt(0);
 							if (sair == 'y') {
 								break;

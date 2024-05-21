@@ -164,7 +164,7 @@ public class Viagem {
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-		String resumo = "Viagem: " + pontoDePartida + " --> " + destino + "\nTrajeto: " + trajeto;
+		String resumo = "\n - Viagem: " + pontoDePartida + " --> " + destino + "\n - Trajeto: " + trajeto;
 		
 		return resumo;
 	}
