@@ -109,6 +109,12 @@ public class Viagem {
 	public void addLocal(Local local) {
 		trajeto.add(local);
 	}
+	
+	// Sobrecarga
+	public void addLocal(int index, Local local) {
+		trajeto.add(index, local);
+	}
+
 
 	public void addPassageiros(Passageiro passageiro) {
 		if (quantidadeDeLugares > 0) {
@@ -125,6 +131,10 @@ public class Viagem {
 
 	public void addEspera(Passageiro passageiro) {
 		espera.add(passageiro);
+	}
+	
+	public void removeEspera(Passageiro passageiro) {
+		espera.remove(passageiro);
 	}
 
 	// Exibir o progresso da viagem (concluída ou a fazer)
