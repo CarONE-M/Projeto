@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
@@ -68,16 +70,47 @@ public class Program {
 		// Simulação de base de dados existente
 
 		// passageiros
-
+		Passageiro p1 = new Passageiro();
+		p1.setNome("Gabriel");
+		Passageiro p2 = new Passageiro();
+		p2.setNome("Julia");
+		Passageiro p3 = new Passageiro();
+		p3.setNome("Maria");
 		// motoristas
-
+		Motorista m1 = new Motorista();
+		m1.setNome("João");
+		Motorista m2 = new Motorista();
+		m2.setNome("Ronaldo");
+		Motorista m3 = new Motorista();
+		m3.setNome("Ana");
 		// locais
-//				Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
-//				Local l2 = new Local("São Paulo", 290.0, 0.0);
-//				Local l3 = new Local("Campinas", 180.0, 0.0);
-//				Local l4 = new Local("Mogi Mirim", 100.0, 0.0);
-//				Local l5 = new Local("Jundiaí", 230.0, 0.0);
-//				Local l6 = new Local("Casa Branca", 30.0, 0.0);
+		Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
+		Local l2 = new Local("São Paulo", 290.0, 0.0);
+		Local l3 = new Local("Campinas", 180.0, 0.0);
+		Local l4 = new Local("Mogi Mirim", 100.0, 0.0);
+		Local l5 = new Local("Jundiaí", 230.0, 0.0);
+		Local l6 = new Local("Casa Branca", 30.0, 0.0);
+
+		// Viagens
+		// v1
+		Viagem v1 = new Viagem(3, l1, l2, "24/05/2024", m1, 0.3);
+		v1.addLocal(0, l1);
+
+		// v2
+		Viagem v2 = new Viagem(4, l3, l5, "25/05/2024", m2, 0.3);
+
+		// v3
+		Viagem v3 = new Viagem(1, l1, l2, "01/06/2024", m3, 0.3);
+
+		// v4
+		Viagem v4 = new Viagem(4, l5, l3, "26/05/2024", m2, 0.3);
+
+		// v5
+		Viagem v5 = new Viagem(3, l2, l1, "26/05/2024", m3, 0.3);
+
+		// Lista das viagens
+		List<Viagem> listaDeViagens = new ArrayList<>();
+		Collections.addAll(listaDeViagens, v1, v2, v3, v4, v5);
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
@@ -207,9 +240,12 @@ public class Program {
 													index++;
 												}
 
-												System.out.print("\nInsira o id para solicitar carona: ");
+												System.out.print(
+														"\nInsira o id para solicitar carona ou -1 para cancelar: ");
 												int viagemSelecionada = sc.nextInt();
-												viagens.get(viagemSelecionada).addEspera(passageiro);
+												if (viagemSelecionada != -1) {
+													viagens.get(viagemSelecionada).addEspera(passageiro);
+												}
 											} else {
 												System.out.println("Nenhuma carona encontrada.");
 											}
@@ -234,7 +270,8 @@ public class Program {
 													System.out.print("\nEntre com o ID da viagem a avaliar: ");
 													int indiceViagem = sc.nextInt();
 													System.out.println();
-													System.out.println(passageiro.getViagens().get(indiceViagem).resumoViagem());
+													System.out.println(
+															passageiro.getViagens().get(indiceViagem).resumoViagem());
 													System.out.print("Nota [0 - 5]: ");
 													int nota = sc.nextInt();
 													System.out.print("Comentário: ");
@@ -243,7 +280,8 @@ public class Program {
 													Avaliacao avaliacao = new Avaliacao(nota, comentario);
 													passageiro.getViagens().get(indiceViagem).addAvaliacao(avaliacao);
 												} else {
-													System.out.println("Você não possúi nenhuma viagem completa para avaliar ainda.");
+													System.out.println(
+															"Você não possúi nenhuma viagem completa para avaliar ainda.");
 												}
 											}
 										} else if (opcaoPassageiro == 3) {
