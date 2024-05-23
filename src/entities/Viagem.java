@@ -101,6 +101,7 @@ public class Viagem {
 	public List<Passageiro> getPassageirosJaAvaliaram() {
 		return passageirosJaAvaliaram;
 	}
+
 	public List<Passageiro> getEspera() {
 		return espera;
 	}
@@ -113,12 +114,11 @@ public class Viagem {
 	public void addLocal(Local local) {
 		trajeto.add(local);
 	}
-	
+
 	// Sobrecarga
 	public void addLocal(int index, Local local) {
 		trajeto.add(index, local);
 	}
-
 
 	public void addPassageiros(Passageiro passageiro) {
 		if (quantidadeDeLugares > 0) {
@@ -136,11 +136,11 @@ public class Viagem {
 	public void addEspera(Passageiro passageiro) {
 		espera.add(passageiro);
 	}
-	
+
 	public void addJaAvaliaram(Passageiro passageiro) {
 		passageirosJaAvaliaram.add(passageiro);
 	}
-	
+
 	public void removeEspera(Passageiro passageiro) {
 		espera.remove(passageiro);
 	}
@@ -172,8 +172,9 @@ public class Viagem {
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-		String resumo = "\n - Viagem: " + pontoDePartida + " --> " + destino + "\n - Trajeto: " + trajeto;
-		
+		String resumo = "\nMotorista: " + motorista.getNome() + " | " + data + "\n - Viagem: " + pontoDePartida
+				+ " --> " + destino + "\n - Trajeto: " + trajeto;
+
 		return resumo;
 	}
 
