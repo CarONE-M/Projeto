@@ -18,7 +18,7 @@ public class Passageiro extends Usuario {
 		for (Viagem viagem : viagensCadastradas) {
 			boolean pontoPartidaEncontrado = false;
 			boolean pontoDestinoEncontrado = false;
-			if (viagem.getProgresso() == false && viagem.getQuantidadeDeLugares() > 0) {
+			if (viagem.getProgresso() == false && viagem.getQuantidadeDeLugares() > 0 && !viagem.getEspera().contains(this) && !viagem.getPassageiros().contains(this)) {
 				for (Local local : viagem.getTrajeto()) {
 					if (local.compararDistancia(partida) <= 5.0 && pontoPartidaEncontrado == false) {
 						pontoPartidaEncontrado = true;
