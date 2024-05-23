@@ -17,6 +17,7 @@ public class Viagem {
 	private List<Passageiro> passageiros = new ArrayList<Passageiro>();
 	private List<Passageiro> espera = new ArrayList<Passageiro>();
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
+	private List<Passageiro> passageirosJaAvaliaram = new ArrayList<Passageiro>();
 
 	// Contrustores
 	public Viagem() {
@@ -97,6 +98,9 @@ public class Viagem {
 		return passageiros;
 	}
 
+	public List<Passageiro> getPassageirosJaAvaliaram() {
+		return passageirosJaAvaliaram;
+	}
 	public List<Passageiro> getEspera() {
 		return espera;
 	}
@@ -131,6 +135,10 @@ public class Viagem {
 
 	public void addEspera(Passageiro passageiro) {
 		espera.add(passageiro);
+	}
+	
+	public void addJaAvaliaram(Passageiro passageiro) {
+		passageirosJaAvaliaram.add(passageiro);
 	}
 	
 	public void removeEspera(Passageiro passageiro) {

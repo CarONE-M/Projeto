@@ -76,7 +76,7 @@ public class Program {
 		p2.setNome("Julia");
 		Passageiro p3 = new Passageiro();
 		p3.setNome("Maria");
-		
+
 		// motoristas
 		Motorista m1 = new Motorista();
 		m1.setNome("João");
@@ -84,7 +84,7 @@ public class Program {
 		m2.setNome("Ronaldo");
 		Motorista m3 = new Motorista();
 		m3.setNome("Ana");
-		
+
 		// locais
 		Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
 		Local l2 = new Local("São Paulo", 290.0, 0.0);
@@ -110,9 +110,11 @@ public class Program {
 		// v5
 		Viagem v5 = new Viagem(3, l2, l1, "26/05/2024", m3, 0.3);
 
+		Viagem v6 = new Viagem(3, l4, l6, "26/05/2024", m3, 0.3);
+
 		// Lista das viagens
 		List<Viagem> listaDeViagens = new ArrayList<>();
-		Collections.addAll(listaDeViagens, v1, v2, v3, v4, v5);
+		Collections.addAll(listaDeViagens, v1, v2, v3, v4, v5, v6);
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
@@ -228,7 +230,8 @@ public class Program {
 											double longitudeDestino = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudeDestino = sc.nextDouble();
-											Local destino = new Local(descricaoDestino, longitudeDestino, latitudeDestino);
+											Local destino = new Local(descricaoDestino, longitudeDestino,
+													latitudeDestino);
 
 											List<Viagem> viagens = passageiro.buscarCarona(motorista.getViagens(),
 													partida, destino);
@@ -241,8 +244,15 @@ public class Program {
 													index++;
 												}
 
-												System.out.print("\nInsira o id para solicitar carona ou -1 para cancelar: ");
+												System.out.print(
+														"\nInsira o id para solicitar carona ou -1 para cancelar: ");
 												int viagemSelecionada = sc.nextInt();
+												while (viagemSelecionada > viagens.size() - 1) {
+													System.out.println("\nERRO! Por favor, insira um id válido.");
+													System.out.print(
+															"\nInsira o id para solicitar carona ou -1 para cancelar: ");
+													viagemSelecionada = sc.nextInt();
+												}
 												if (viagemSelecionada != -1) {
 													viagens.get(viagemSelecionada).addEspera(passageiro);
 												}
@@ -250,37 +260,51 @@ public class Program {
 												System.out.println("Nenhuma carona encontrada.");
 											}
 										} else if (opcaoPassageiro == 2) {
-											int contador = 0;
-											int contaViagem = 0;
+											List<Viagem> viagensAvaliar = new ArrayList<Viagem>();
 											System.out.println("\nAVALIAR VIAGEM");
-
 											if (passageiro.getViagens().isEmpty()) {
-												System.out.println("Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
+												System.out.println(
+														"Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
 											} else {
 												System.out.println("\nVIAGENS CONCLUIDAS");
 												for (Viagem viagem : passageiro.getViagens()) {
-													if (viagem.getProgresso()) {
-														System.out.println(contador + ") " + viagem.resumoViagem());
-														contaViagem++;
+													if (viagem.getProgresso() && !viagem.getPassageirosJaAvaliaram()
+															.contains(passageiro)) {
+														viagensAvaliar.add(viagem);
 													}
-													contador++;
 												}
-												if (contaViagem > 0) {
+												int index = 0;
+												for (Viagem viagem : viagensAvaliar) {
+													System.out.println(index + ") " + viagem.resumoViagem());
+													index++;
+												}
+												if (viagensAvaliar.size() > 0) {
 													System.out.print("\nEntre com o ID da viagem a avaliar: ");
 													int indiceViagem = sc.nextInt();
+													while(indiceViagem > viagensAvaliar.size() - 1) {
+														System.out.println("ERRO! Entre com um índice válido.");
+														System.out.print("\nEntre com o ID da viagem a avaliar: ");
+														indiceViagem = sc.nextInt();
+													}
 													System.out.println();
-													System.out.println(
-															passageiro.getViagens().get(indiceViagem).resumoViagem());
+													System.out.println(viagensAvaliar.get(indiceViagem).resumoViagem());
 													System.out.print("Nota [0 - 5]: ");
 													int nota = sc.nextInt();
+													while (nota < 0 || nota > 5) {
+														System.out.println("Nota inválida.");
+														System.out.print("Nota [0 - 5]: ");
+														nota = sc.nextInt();
+													}
 													System.out.print("Comentário: ");
 													sc.nextLine();
 													String comentario = sc.nextLine();
 													Avaliacao avaliacao = new Avaliacao(nota, comentario);
-													passageiro.getViagens().get(indiceViagem).addAvaliacao(avaliacao);
+													viagensAvaliar.get(indiceViagem).addAvaliacao(avaliacao);
+													viagensAvaliar.get(indiceViagem).addJaAvaliaram(passageiro);
+
 												} else {
 													System.out.println(
-															"Você não possúi nenhuma viagem completa para avaliar ainda.");
+															"Você não possúi nenhuma para avaliar ainda.");
 												}
 											}
 										} else if (opcaoPassageiro == 3) {
@@ -369,7 +393,7 @@ public class Program {
 
 										} else if (opcaoMotorista == 2) {
 											System.out.println("\nCONSULTAR PASSAGEIROS");
-											
+
 											for (Viagem viagem : motorista.getViagens()) {
 												System.out.print(viagem.resumoViagem());
 												viagem.exibirProgresso();
@@ -387,14 +411,19 @@ public class Program {
 															motorista.aceitarPassageiro(solicitante, viagem);
 															solicitante.addViagem(viagem);
 															iterator.remove();
+															viagem.concluirViagem();
 														} else if (resposta == 'n') {
 															iterator.remove();
 														}
 													}
 												}
 											}
+											if (motorista.getViagens().size() == 0) {
+												System.out.println("Você ainda não nenhuma viagem cadastrada.");
+											}
 										} else if (opcaoMotorista == 3) {
 											System.out.println("\nAVALIAÇÕES");
+											System.out.println("Comentarios:");
 											motorista.exibirComentarios();
 											System.out.println(motorista.getMediaDeAvaliacoes());
 										} else if (opcaoMotorista == 4) {
@@ -404,9 +433,14 @@ public class Program {
 									}
 								}
 							}
-							System.out.print("\nSair da conta (y)? ");
+							System.out.print("\nSair da conta (s/n)? ");
 							char sair = sc.next().toLowerCase().charAt(0);
-							if (sair == 'y') {
+							while (sair != 's' && sair != 'n') {
+								System.out.print("ERRO! Insira [s/n]");
+								System.out.print("\nSair da conta [s/n]? ");
+								sair = sc.next().toLowerCase().charAt(0);
+							}
+							if (sair == 's') {
 								break;
 							}
 						}
