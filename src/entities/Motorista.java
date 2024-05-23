@@ -21,7 +21,7 @@ public class Motorista extends Usuario {
 	}
 
 	// Retornar a média das avaliações de todas as viagens
-	public Double getMediaDeAvaliacoes() {
+	public String getMediaDeAvaliacoes() {
 		double soma = 0.0;
 		int qtdAvaliacoes = 0;
 		for (Viagem viagem : this.getViagens()) {
@@ -32,9 +32,9 @@ public class Motorista extends Usuario {
 		}
 		if (qtdAvaliacoes > 0) {
 			double media = soma / qtdAvaliacoes;
-			return media;
+			return String.format("Nota geral: %.2f", media);
 		} else {
-			return null;
+			return "Nenhuma avaliação disponível!";
 		}
 	}
 
