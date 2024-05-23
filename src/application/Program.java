@@ -87,34 +87,53 @@ public class Program {
 
 		// locais
 		Local l1 = new Local("São José do Rio Pardo", 0.0, 0.0);
-		Local l2 = new Local("São Paulo", 290.0, 0.0);
-		Local l3 = new Local("Campinas", 180.0, 0.0);
-		Local l4 = new Local("Mogi Mirim", 100.0, 0.0);
+		Local l2 = new Local("Casa Branca", 30.0, 0.0);
+		Local l3 = new Local("Mogi Mirim", 100.0, 0.0);
+		Local l4 = new Local("Campinas", 180.0, 0.0);
 		Local l5 = new Local("Jundiaí", 230.0, 0.0);
-		Local l6 = new Local("Casa Branca", 30.0, 0.0);
+		Local l6 = new Local("São Paulo", 290.0, 0.0);
 
 		// Viagens
 		// v1
-		Viagem v1 = new Viagem(3, l1, l2, "24/05/2024", m1, 0.3);
-		v1.addLocal(0, l1);
+		Viagem v1 = new Viagem(3, l1, l6, "24/05/2024", m1, 0.3);
+		v1.addLocal(l1);
+		v1.addLocal(l2);
+		v1.addLocal(l3);
+		v1.addLocal(l4);
+		v1.addLocal(l5);
+		v1.addLocal(l6);
 
 		// v2
 		Viagem v2 = new Viagem(4, l3, l5, "25/05/2024", m2, 0.3);
-
+		v2.addLocal(l3);
+		v2.addLocal(l4);
+		v2.addLocal(l5);
+		
 		// v3
 		Viagem v3 = new Viagem(1, l1, l2, "01/06/2024", m3, 0.3);
-
+		v3.addLocal(l1);
+		v3.addLocal(l2);
+		
 		// v4
 		Viagem v4 = new Viagem(4, l5, l3, "26/05/2024", m2, 0.3);
-
+		v4.addLocal(l5);
+		v4.addLocal(l3);
+		
 		// v5
 		Viagem v5 = new Viagem(3, l2, l1, "26/05/2024", m3, 0.3);
-
+		v5.addLocal(l2);
+		v5.addLocal(l1);
+		
+		// v6
 		Viagem v6 = new Viagem(3, l4, l6, "26/05/2024", m3, 0.3);
+		v6.addLocal(l4);
+		v6.addLocal(l5);
+		v6.addLocal(l6);
 
 		// Lista das viagens
 		List<Viagem> listaDeViagens = new ArrayList<>();
 		Collections.addAll(listaDeViagens, v1, v2, v3, v4, v5, v6);
+		
 
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
@@ -232,8 +251,10 @@ public class Program {
 											double latitudeDestino = sc.nextDouble();
 											Local destino = new Local(descricaoDestino, longitudeDestino,
 													latitudeDestino);
-
-											List<Viagem> viagens = passageiro.buscarCarona(motorista.getViagens(),
+											// Para teste:
+											// listaDeViagens
+											// motorista.getViagens()
+											List<Viagem> viagens = passageiro.buscarCarona(listaDeViagens,
 													partida, destino);
 											int index = 0;
 											if (viagens.size() > 0) {
@@ -255,6 +276,7 @@ public class Program {
 												}
 												if (viagemSelecionada != -1) {
 													viagens.get(viagemSelecionada).addEspera(passageiro);
+													System.out.println("Viagem solicitada ao motorista.");
 												}
 											} else {
 												System.out.println("Nenhuma carona encontrada.");
