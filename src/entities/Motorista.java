@@ -51,7 +51,7 @@ public class Motorista extends Usuario {
 					}
 				}
 			} else
-				System.out.println("sem comentários ainda...");
+				System.out.println("\nSem comentários ainda!");
 		}
 	}
 

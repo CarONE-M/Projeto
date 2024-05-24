@@ -148,9 +148,9 @@ public class Viagem {
 	// Exibir o progresso da viagem (concluída ou a fazer)
 	public void exibirProgresso() {
 		if (progresso) {
-			System.out.println(", Progresso: concluído");
+			System.out.println("\n - Progresso: concluído");
 		} else {
-			System.out.println(", Progresso: a fazer");
+			System.out.println("\n - Progresso: a fazer");
 		}
 	}
 
@@ -163,17 +163,19 @@ public class Viagem {
 	public void exibirPassageiros() {
 		if (passageiros.size() > 0) {
 			for (Passageiro pass : passageiros) {
-				System.out.println("  - " + pass.getNome());
+				System.out.println(" - " + pass.getNome());
 			}
 		} else {
-			System.out.println("  - Sem passageiros ainda...");
+			System.out.println(" - Sem passageiros ainda...");
 		}
 	}
 
 	// Método que retorna a partida e o destino da viagem
 	public String resumoViagem() {
-		String resumo = "\nMotorista: " + motorista.getNome() + " | " + data + "\n - Viagem: " + pontoDePartida
-				+ " --> " + destino + "\n - Trajeto: " + trajeto;
+		String resumo = "\n - Motorista: " + motorista.getNome() + 
+						"\n - Data da viagem: " + data + 
+						"\n - Viagem: " + pontoDePartida + " --> " + destino + 
+						"\n - Trajeto: " + trajeto;
 
 		return resumo;
 	}

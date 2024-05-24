@@ -193,7 +193,7 @@ public class Program {
 					passageiro = new Passageiro(nome, endereco, email, telefone, senha);
 					motorista = new Motorista(nome, endereco, email, telefone, senha);
 					cadastroRealizado = true;
-					System.out.println("Cadastro realizado com sucesso!\n");
+					System.out.println("\nCadastro realizado com sucesso!\n");
 				} else {
 					System.out.println("Cadastro já realizado.\n");
 				}
@@ -249,13 +249,11 @@ public class Program {
 											double longitudeDestino = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudeDestino = sc.nextDouble();
-											Local destino = new Local(descricaoDestino, longitudeDestino,
-													latitudeDestino);
+											Local destino = new Local(descricaoDestino, longitudeDestino, latitudeDestino);
 											// Para teste:
 											// listaDeViagens
 											// motorista.getViagens()
-											List<Viagem> viagens = passageiro.buscarCarona(listaDeViagens,
-													partida, destino);
+											List<Viagem> viagens = passageiro.buscarCarona(listaDeViagens, partida, destino);
 											int index = 0;
 											if (viagens.size() > 0) {
 												System.out.println("\nVIAGENS DISPONÍVEIS");
@@ -265,13 +263,11 @@ public class Program {
 													index++;
 												}
 
-												System.out.print(
-														"\nInsira o id para solicitar carona ou -1 para cancelar: ");
+												System.out.print("\nInsira o id para solicitar carona ou -1 para cancelar: ");
 												int viagemSelecionada = sc.nextInt();
 												while (viagemSelecionada > viagens.size() - 1) {
 													System.out.println("\nERRO! Por favor, insira um id válido.");
-													System.out.print(
-															"\nInsira o id para solicitar carona ou -1 para cancelar: ");
+													System.out.print("\nInsira o id para solicitar carona ou -1 para cancelar: ");
 													viagemSelecionada = sc.nextInt();
 												}
 												if (viagemSelecionada != -1) {
@@ -279,7 +275,7 @@ public class Program {
 													System.out.println("Viagem solicitada ao motorista.");
 												}
 											} else {
-												System.out.println("Nenhuma carona encontrada.");
+												System.out.println("\nNenhuma carona encontrada.");
 											}
 										} else if (opcaoPassageiro == 2) {
 											List<Viagem> viagensAvaliar = new ArrayList<Viagem>();
@@ -330,7 +326,7 @@ public class Program {
 												}
 											}
 										} else if (opcaoPassageiro == 3) {
-											System.out.println("\nSessão passageiro encerrada.\n");
+											System.out.println("\nSessão passageiro encerrada.");
 											break;
 										}
 									}
@@ -441,7 +437,7 @@ public class Program {
 												}
 											}
 											if (motorista.getViagens().size() == 0) {
-												System.out.println("Você ainda não nenhuma viagem cadastrada.");
+												System.out.println("Você não tem nenhuma viagem cadastrada.");
 											}
 										} else if (opcaoMotorista == 3) {
 											System.out.println("\nAVALIAÇÕES");
@@ -472,11 +468,11 @@ public class Program {
 					}
 
 				} else {
-					System.out.println("Cadastro ainda não realizado.\n");
+					System.out.println("\nCadastro ainda não realizado.\n");
 				}
 
 			} else if (opcao == 3) {
-				System.out.println("Saindo...");
+				System.out.println("\nSaindo...");
 				break;
 			} else {
 				System.out.println("Opção inválida! Tente novamente.\n");
