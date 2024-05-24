@@ -249,10 +249,7 @@ public class Program {
 											double longitudeDestino = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudeDestino = sc.nextDouble();
-											Local destino = new Local(descricaoDestino, longitudeDestino, latitudeDestino);
-											// Para teste:
-											// listaDeViagens
-											// motorista.getViagens()
+											Local destino = new Local(descricaoDestino, longitudeDestino, latitudeDestino);										
 											List<Viagem> viagens = passageiro.buscarCarona(listaDeViagens, partida, destino);
 											int index = 0;
 											if (viagens.size() > 0) {
@@ -404,6 +401,7 @@ public class Program {
 											} while (addParada != 'n');
 											viagem.addLocal(0, partida);
 											viagem.addLocal(destino);
+											// Como passageiro, busque a própria viagem cadastrada como motorista para testar as duas perspectivas.
 											listaDeViagens.add(viagem);
 											System.out.println("\nViagem cadastrada com sucesso!");
 											System.out.println("\nRESUMO: " + viagem.resumoViagem());
