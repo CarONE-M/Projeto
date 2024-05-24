@@ -23,7 +23,7 @@ public class Passageiro extends Usuario {
 					if (local.compararDistancia(partida) <= 5.0 && pontoPartidaEncontrado == false) {
 						pontoPartidaEncontrado = true;
 					}
-					if (pontoPartidaEncontrado && local.compararDistancia(destino) <= 5.0) {
+					else if (pontoPartidaEncontrado && local.compararDistancia(destino) <= 5.0) {
 						pontoDestinoEncontrado = true;
 					}
 					if (pontoPartidaEncontrado && pontoDestinoEncontrado) {

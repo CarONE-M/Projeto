@@ -45,7 +45,7 @@ public class Motorista extends Usuario {
 			if (viagem.getAvaliacoes().size() > 0) {
 				for (Avaliacao avaliacao : viagem.getAvaliacoes()) {
 					if (avaliacao.getComentario() != "" || avaliacao.getComentario() != null) {
-						System.out.println(avaliacao.getComentario());
+						System.out.println("Comentário: " + avaliacao.getComentario());
 					} else {
 						System.out.println("-- avaliação sem comentarios --");
 					}

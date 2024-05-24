@@ -304,7 +304,6 @@ public class Program {
 														System.out.print("\nEntre com o ID da viagem a avaliar: ");
 														indiceViagem = sc.nextInt();
 													}
-													System.out.println();
 													System.out.println(viagensAvaliar.get(indiceViagem).resumoViagem());
 													System.out.print("Nota [0 - 5]: ");
 													int nota = sc.nextInt();
@@ -405,6 +404,7 @@ public class Program {
 											} while (addParada != 'n');
 											viagem.addLocal(0, partida);
 											viagem.addLocal(destino);
+											listaDeViagens.add(viagem);
 											System.out.println("\nViagem cadastrada com sucesso!");
 											System.out.println("\nRESUMO: " + viagem.resumoViagem());
 											System.out.println(" - Preço calculado: R$" + viagem.getPreco());
@@ -421,9 +421,9 @@ public class Program {
 													Iterator<Passageiro> iterator = viagem.getEspera().iterator();
 													while (iterator.hasNext()) {
 														Passageiro solicitante = iterator.next();
-														System.out.printf("%s está solicitando carona.",
+														System.out.printf("\n%s está solicitando carona.",
 																solicitante.getNome());
-														System.out.println("\nAceitar[s/n]: ");
+														System.out.print("\nAceitar[s/n]: ");
 														char resposta = sc.next().toLowerCase().charAt(0);
 														if (resposta == 's') {
 															motorista.aceitarPassageiro(solicitante, viagem);

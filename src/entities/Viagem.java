@@ -163,7 +163,7 @@ public class Viagem {
 	public void exibirPassageiros() {
 		if (passageiros.size() > 0) {
 			for (Passageiro pass : passageiros) {
-				System.out.println(" - " + pass.getNome());
+				System.out.println(" - Nome passageiro: " + pass.getNome());
 			}
 		} else {
 			System.out.println(" - Sem passageiros ainda...");
