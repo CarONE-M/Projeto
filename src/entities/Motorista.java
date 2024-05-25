@@ -32,7 +32,7 @@ public class Motorista extends Usuario {
 		}
 		if (qtdAvaliacoes > 0) {
 			double media = soma / qtdAvaliacoes;
-			return String.format("Nota geral: %.2f", media);
+			return String.format(" - Nota geral: %.2f", media);
 		} else {
 			return "Nenhuma avaliação disponível!";
 		}
@@ -45,7 +45,7 @@ public class Motorista extends Usuario {
 			if (viagem.getAvaliacoes().size() > 0) {
 				for (Avaliacao avaliacao : viagem.getAvaliacoes()) {
 					if (avaliacao.getComentario() != "" || avaliacao.getComentario() != null) {
-						System.out.println("Comentário: " + avaliacao.getComentario());
+						System.out.println(" - Comentário: " + avaliacao.getComentario());
 					} else {
 						System.out.println("-- avaliação sem comentarios --");
 					}

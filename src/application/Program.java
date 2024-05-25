@@ -134,7 +134,6 @@ public class Program {
 		List<Viagem> listaDeViagens = new ArrayList<>();
 		Collections.addAll(listaDeViagens, v1, v2, v3, v4, v5, v6);
 		
-
 		boolean cadastroRealizado = false; // variável que verifica se o cadastro ja foi realizado
 
 		Usuario usuario = null;
@@ -237,8 +236,7 @@ public class Program {
 											double longitudePartida = sc.nextDouble();
 											System.out.print("Digite a latitude: ");
 											double latitudePartida = sc.nextDouble();
-											Local partida = new Local(descricaoPartida, longitudePartida,
-													latitudePartida);
+											Local partida = new Local(descricaoPartida, longitudePartida, latitudePartida);
 
 											// Local: Destino
 											System.out.println("\nDESTINO");
@@ -278,13 +276,11 @@ public class Program {
 											List<Viagem> viagensAvaliar = new ArrayList<Viagem>();
 											System.out.println("\nAVALIAR VIAGEM");
 											if (passageiro.getViagens().isEmpty()) {
-												System.out.println(
-														"Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
+												System.out.println("Você ainda não fez nenhuma viagem e, portanto, não pode avaliar uma viagem.");
 											} else {
 												System.out.println("\nVIAGENS CONCLUIDAS");
 												for (Viagem viagem : passageiro.getViagens()) {
-													if (viagem.getProgresso() && !viagem.getPassageirosJaAvaliaram()
-															.contains(passageiro)) {
+													if (viagem.getProgresso() && !viagem.getPassageirosJaAvaliaram().contains(passageiro)) {
 														viagensAvaliar.add(viagem);
 													}
 												}
@@ -302,7 +298,7 @@ public class Program {
 														indiceViagem = sc.nextInt();
 													}
 													System.out.println(viagensAvaliar.get(indiceViagem).resumoViagem());
-													System.out.print("Nota [0 - 5]: ");
+													System.out.print("\nNota [0 - 5]: ");
 													int nota = sc.nextInt();
 													while (nota < 0 || nota > 5) {
 														System.out.println("Nota inválida.");
@@ -317,8 +313,7 @@ public class Program {
 													viagensAvaliar.get(indiceViagem).addJaAvaliaram(passageiro);
 
 												} else {
-													System.out.println(
-															"Você não possúi nenhuma para avaliar ainda.");
+													System.out.println("Você não possúi nenhuma para avaliar ainda.");
 												}
 											}
 										} else if (opcaoPassageiro == 3) {
@@ -344,12 +339,10 @@ public class Program {
 													sc.nextLine();
 													qtdValida = true;
 												} catch (InputMismatchException err) {
-													System.out.println(
-															"Por favor, insira um número inteiro válido para a quantidade de lugares.");
+													System.out.println("Por favor, insira um número inteiro válido para a quantidade de lugares.");
 													sc.nextLine();
 												}
 											}
-											;
 
 											// Local: Ponto de partida
 											System.out.println("\nPONTO DE PARTIDA");
@@ -377,8 +370,7 @@ public class Program {
 											System.out.print("Preço por quilômetro: ");
 											double precoPorKm = sc.nextDouble();
 
-											Viagem viagem = new Viagem(qtdLugares, partida, destino, data, motorista,
-													precoPorKm);
+											Viagem viagem = new Viagem(qtdLugares, partida, destino, data, motorista, precoPorKm);
 
 											// Adicionar parada no trajeto
 											char addParada;
@@ -419,8 +411,7 @@ public class Program {
 													Iterator<Passageiro> iterator = viagem.getEspera().iterator();
 													while (iterator.hasNext()) {
 														Passageiro solicitante = iterator.next();
-														System.out.printf("\n%s está solicitando carona.",
-																solicitante.getNome());
+														System.out.printf("\n%s está solicitando carona.", solicitante.getNome());
 														System.out.print("\nAceitar[s/n]: ");
 														char resposta = sc.next().toLowerCase().charAt(0);
 														if (resposta == 's') {

@@ -23,8 +23,7 @@ public class Viagem {
 	public Viagem() {
 	}
 
-	public Viagem(int quantidadeDeLugares, Local pontoDePartida, Local destino, String data, Motorista motorista,
-			double precoPorKm) {
+	public Viagem(int quantidadeDeLugares, Local pontoDePartida, Local destino, String data, Motorista motorista, double precoPorKm) {
 		this.quantidadeDeLugares = quantidadeDeLugares;
 		this.pontoDePartida = pontoDePartida;
 		this.destino = destino;
